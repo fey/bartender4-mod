@@ -2,12 +2,13 @@
 ## Notes-ruRU: Простой и усовершенствованный - Аддон паненей команд Бармен4 
 ## Notes: Simple and Advanced combined - Bartender4 ActionBar AddOn
 ## Title: Bartender4
-## Author: Nevcairiel
+## Author: Nevcairiel, feycot
 ## SavedVariables: Bartender4DB
 ## OptionalDeps: Ace3, ButtonFacade, LibKeyBound-1.0
 ## X-Embeds: Ace3, LibKeyBound-1.0
 ## X-Category: Action Bars
 ## Version: 4.0
+## X-Website: https://github.com/fey/bartender4-mod
 
 embeds.xml
 libs\LibDataBroker-1.1.lua
