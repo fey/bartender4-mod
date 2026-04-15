@@ -8,6 +8,9 @@ local defaults = { profile = Bartender4:Merge({
 	enabled = true,
 	showtext = true,
 	autohide = true,
+	width = 512,
+	height = 14,
+	texture = "Interface\\TARGETINGFRAME\\UI-StatusBar",
 }, Bartender4.Bar.defaults) }
 
 function ReputationBarMod:OnInitialize()
@@ -32,8 +35,12 @@ function ReputationBarMod:OnEnable()
 		bg:SetAllPoints(status)
 		self.bar.bg = bg
 
-		local text = self.bar:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		text:SetPoint("CENTER", self.bar, "CENTER", 0, 0)
+		local textFrame = CreateFrame("Frame", nil, self.bar)
+		textFrame:SetAllPoints(self.bar)
+		textFrame:SetFrameLevel(self.bar.status:GetFrameLevel() + 2)
+
+		local text = textFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+		text:SetPoint("CENTER", textFrame, "CENTER", 0, 0)
 		self.bar.text = text
 
 		self.bar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 24)
@@ -70,8 +77,14 @@ function ReputationBar:ApplyConfig(config)
 end
 
 function ReputationBar:PerformLayout()
-	self:SetSize(512, 14)
+	local width = self.config.width or 512
+	local height = self.config.height or 14
+	local texture = self.config.texture or "Interface\\TARGETINGFRAME\\UI-StatusBar"
+	self:SetSize(width, height)
 	self.status:SetAllPoints(self)
+	-- Apply texture
+	self.status:SetStatusBarTexture(texture)
+	self.bg:SetTexture(texture)
 	if self.config.showtext then
 		self.text:Show()
 	else
@@ -118,4 +131,31 @@ function ReputationBar:Update()
 		local standingName = standingText and standingText[standing] or ""
 		self.text:SetText(("%s: %s %d / %d (%.1f%%)"):format(name, standingName, progress, range, (progress / range) * 100))
 	end
+end
+
+function ReputationBar:GetBarWidth()
+	return self.config.width
+end
+
+function ReputationBar:SetBarWidth(width)
+	self.config.width = width
+	self:PerformLayout()
+end
+
+function ReputationBar:GetBarHeight()
+	return self.config.height
+end
+
+function ReputationBar:SetBarHeight(height)
+	self.config.height = height
+	self:PerformLayout()
+end
+
+function ReputationBar:GetBarTexture()
+	return self.config.texture
+end
+
+function ReputationBar:SetBarTexture(texture)
+	self.config.texture = texture
+	self:PerformLayout()
 end

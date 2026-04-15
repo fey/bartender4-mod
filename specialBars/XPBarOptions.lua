@@ -19,6 +19,60 @@ function XPBarMod:SetupOptions()
 		}
 		self.optionobject:AddElement("general", "enabled", enabled)
 
+		-- Bar Width (order 40)
+		self.optionobject:AddElement("general", "width", {
+			type = "range",
+			order = 40,
+			name = L["Bar Width"],
+			desc = L["Set the width of the bar."],
+			min = 100,
+			max = 800,
+			step = 10,
+			get = function() return self.db.profile.width end,
+			set = function(info, value)
+				self.db.profile.width = value
+				self:ApplyConfig()
+			end,
+		})
+
+		-- Bar Height (order 50)
+		self.optionobject:AddElement("general", "height", {
+			type = "range",
+			order = 50,
+			name = L["Bar Height"],
+			desc = L["Set the height of the bar."],
+			min = 5,
+			max = 50,
+			step = 1,
+			get = function() return self.db.profile.height end,
+			set = function(info, value)
+				self.db.profile.height = value
+				self:ApplyConfig()
+			end,
+		})
+
+		-- Bar Texture (order 60)
+		local barTextures = {
+			["Interface\\TARGETINGFRAME\\UI-StatusBar"] = "Standard",
+			["Interface\\RAIDFRAME\\Raid-Bar-Hp-Fill"] = "Raid",
+			["Interface\\CASTINGBAR\\UI-CastingBar-Standard"] = "Casting",
+			["Interface\\PAPERDOLLINFOFRAME\\UI-Character-Skills-Bar"] = "Skills",
+			["Interface\\TARGETINGFRAME\\UI-TargetingFrame-BarFill"] = "Targeting",
+		}
+
+		self.optionobject:AddElement("general", "texture", {
+			type = "select",
+			order = 60,
+			name = L["Bar Texture"],
+			desc = L["Select the texture for the bar."],
+			values = barTextures,
+			get = function() return self.db.profile.texture end,
+			set = function(info, value)
+				self.db.profile.texture = value
+				self:ApplyConfig()
+			end,
+		})
+
 		self.optionobject:AddElement("general", "showtext", {
 			type = "toggle",
 			order = 81,
