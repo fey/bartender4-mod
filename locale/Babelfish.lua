@@ -31,6 +31,8 @@ local files = {
 	"specialBars/PetBarOptions.lua",
 	"specialBars/StanceBar.lua",
 	"specialBars/StanceBarOptions.lua",
+	"specialBars/XPBarOptions.lua",
+	"specialBars/ReputationBarOptions.lua",
 }
 
 local strings = {}

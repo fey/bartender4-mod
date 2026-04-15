@@ -8,4 +8,8 @@
 	<Script file="PetBarOptions.lua"/>
 	<Script file="StanceBar.lua"/>
 	<Script file="StanceBarOptions.lua"/>
+	<Script file="XPBar.lua"/>
+	<Script file="XPBarOptions.lua"/>
+	<Script file="ReputationBar.lua"/>
+	<Script file="ReputationBarOptions.lua"/>
 </Ui>
