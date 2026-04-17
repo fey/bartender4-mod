@@ -2,11 +2,119 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("Bartender4")
 
 local ReputationBarMod = Bartender4:GetModule("ReputationBar")
-local Bar = Bartender4.Bar.prototype
 
 function ReputationBarMod:SetupOptions()
 	if not self.options then
-		self.optionobject = Bar:GetOptionObject()
+		self.optionobject = Bartender4:NewOptionObject({
+			general = {
+				type = "group",
+				cmdInline = true,
+				name = L["General Settings"],
+				order = 1,
+				args = {
+					styleheader = {
+						order = 10,
+						type = "header",
+						name = L["Bar Style & Layout"],
+					},
+				},
+			},
+		})
+
+		local showOptions = {
+			alwaysshow = L["Always Show"],
+			alwayshide = L["Always Hide"],
+			combatshow = L["Show in Combat"],
+			combathide = L["Hide in Combat"],
+		}
+
+		self.optionobject:AddElement("general", "show", {
+			order = 5,
+			type = "select",
+			name = L["Show/Hide"],
+			desc = L["Configure when to Show/Hide the bar."],
+			values = showOptions,
+			get = function() return self.db.profile.show end,
+			set = function(info, value)
+				self.db.profile.show = value
+				self:ApplyConfig()
+			end,
+		})
+
+		self.optionobject:AddElement("general", "alpha", {
+			order = 20,
+			name = L["Alpha"],
+			desc = L["Configure the alpha of the bar."],
+			type = "range",
+			min = .1,
+			max = 1,
+			bigStep = 0.1,
+			get = function() return self.db.profile.alpha end,
+			set = function(info, value)
+				self.db.profile.alpha = value
+				self:ApplyConfig()
+			end,
+		})
+
+		self.optionobject:AddElement("general", "scale", {
+			order = 30,
+			name = L["Scale"],
+			desc = L["Configure the scale of the bar."],
+			type = "range",
+			min = .1,
+			max = 2,
+			step = 0.05,
+			get = function() return self.db.profile.scale end,
+			set = function(info, value)
+				self.db.profile.scale = value
+				self:ApplyConfig()
+			end,
+		})
+
+		self.optionobject:AddElement("general", "fadeout", {
+			order = 100,
+			name = L["Fade Out"],
+			desc = L["Enable the FadeOut mode"],
+			type = "toggle",
+			width = "full",
+			get = function() return self.db.profile.fadeout end,
+			set = function(info, value)
+				self.db.profile.fadeout = value
+				self:ApplyConfig()
+			end,
+		})
+
+		self.optionobject:AddElement("general", "fadeoutalpha", {
+			order = 101,
+			name = L["Fade Out Alpha"],
+			desc = L["Enable the FadeOut mode"],
+			type = "range",
+			min = 0,
+			max = 1,
+			step = 0.05,
+			disabled = function() return not self.db.profile.fadeout end,
+			get = function() return self.db.profile.fadeoutalpha end,
+			set = function(info, value)
+				self.db.profile.fadeoutalpha = value
+				self:ApplyConfig()
+			end,
+		})
+
+		self.optionobject:AddElement("general", "fadeoutdelay", {
+			order = 102,
+			name = L["Fade Out Delay"],
+			desc = L["Enable the FadeOut mode"],
+			type = "range",
+			min = 0,
+			max = 1,
+			step = 0.01,
+			disabled = function() return not self.db.profile.fadeout end,
+			get = function() return self.db.profile.fadeoutdelay end,
+			set = function(info, value)
+				self.db.profile.fadeoutdelay = value
+				self:ApplyConfig()
+			end,
+		})
 
 		local enabled = {
 			type = "toggle",
@@ -114,7 +222,6 @@ function ReputationBarMod:SetupOptions()
 			type = "group",
 			name = L["Reputation Bar"],
 			desc = L["Configure the Reputation Bar"],
-			childGroups = "tab",
 		}
 		Bartender4:RegisterBarOptions("ReputationBar", self.options)
 	end
