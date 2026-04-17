@@ -16,6 +16,12 @@ local defaults = { profile = Bartender4:Merge({
 	enabled = true,
 	keyring = false,
 	onebag = false,
+	position = {
+		point = "BOTTOMRIGHT",
+		relPoint = "BOTTOMRIGHT",
+		x = 0,
+		y = 52,
+	},
 }, Bartender4.ButtonBar.defaults) }
 
 function BagBarMod:OnInitialize()

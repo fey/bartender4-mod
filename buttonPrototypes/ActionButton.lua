@@ -521,14 +521,22 @@ function Button:HideButton()
 	self.Proxy:Hide()
 end
 
-function Button:ShowGrid()
-	self.showgrid = self.showgrid + 1
+function Button:ShowGrid(force)
+	if force then
+		self.showgrid = 1
+	else
+		self.showgrid = self.showgrid + 1
+	end
 	
 	self:ShowButton()
 end
 
-function Button:HideGrid()
-	if self.showgrid > 0 then self.showgrid = self.showgrid - 1 end
+function Button:HideGrid(force)
+	if force then
+		self.showgrid = 0
+	elseif self.showgrid > 0 then
+		self.showgrid = self.showgrid - 1
+	end
 	if ( self.showgrid == 0 and not HasAction(self.action) and not self.parent.config.showgrid ) then
 		self:HideButton()
 	end

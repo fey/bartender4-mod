@@ -19,7 +19,13 @@ local KeyBound = LibStub("LibKeyBound-1.0")
 
 local defaults = { profile = Bartender4:Merge({ 
 	enabled = true,
-	scale = 1.5,
+	scale = 1.2,
+	position = {
+		point = "BOTTOM",
+		relPoint = "BOTTOM",
+		x = 0,
+		y = 224,
+	},
 }, Bartender4.ButtonBar.defaults) }
 
 function StanceBarMod:OnInitialize()

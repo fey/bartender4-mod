@@ -15,6 +15,13 @@ local table_insert = table.insert
 local defaults = { profile = Bartender4:Merge({ 
 	enabled = true,
 	vertical = false,
+	scale = 0.75,
+	position = {
+		point = "BOTTOMRIGHT",
+		relPoint = "BOTTOMRIGHT",
+		x = -10,
+		y = 96,
+	},
 }, Bartender4.Bar.defaults) }
 
 function MicroMenuMod:OnInitialize()

@@ -6,6 +6,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Bartender4")
 
 local defaults = {
 	profile = {
+		layoutPresetVersion = 1,
 		tooltip = "enabled",
 		buttonlock = false,
 		outofrange = "button",

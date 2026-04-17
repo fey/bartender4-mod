@@ -8,9 +8,15 @@ local defaults = { profile = Bartender4:Merge({
 	enabled = true,
 	showtext = true,
 	showrested = true,
-	width = 512,
+	width = 0,
 	height = 14,
 	texture = "Interface\\TARGETINGFRAME\\UI-StatusBar",
+	position = {
+		point = "BOTTOM",
+		relPoint = "BOTTOM",
+		x = 0,
+		y = 0,
+	},
 }, Bartender4.Bar.defaults) }
 
 function XPBarMod:OnInitialize()
@@ -79,9 +85,12 @@ function XPBar:ApplyConfig(config)
 end
 
 function XPBar:PerformLayout()
-	local width = self.config.width or 512
+	local width = self.config.width
 	local height = self.config.height or 14
 	local texture = self.config.texture or "Interface\\TARGETINGFRAME\\UI-StatusBar"
+	if not width or width <= 0 then
+		width = UIParent:GetWidth()
+	end
 	self:SetSize(width, height)
 	self.status:SetAllPoints(self)
 	-- Apply texture

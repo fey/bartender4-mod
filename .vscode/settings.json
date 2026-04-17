@@ -51,6 +51,10 @@
         "CharacterBag1Slot",
         "CharacterBag0Slot",
         "RegisterUnitWatch",
-        "UnregisterUnitWatch"
+        "UnregisterUnitWatch",
+        "CharacterMicroButton",
+        "QuestLogMicroButton",
+        "MainMenuMicroButton",
+        "HelpMicroButton"
     ]
 }

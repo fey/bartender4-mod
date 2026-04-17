@@ -13,6 +13,12 @@ local PetBar = setmetatable({}, {__index = ButtonBar})
 local defaults = { profile = Bartender4:Merge({
 	enabled = true,
 	scale = 1.0,
+	position = {
+		point = "BOTTOM",
+		relPoint = "BOTTOM",
+		x = 0,
+		y = 268,
+	},
 }, Bartender4.ButtonBar.defaults) }
 
 function PetBarMod:OnInitialize()

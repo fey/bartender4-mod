@@ -10,7 +10,7 @@ local abdefaults = {
 		buttons = 12,
 		hidemacrotext = false,
 		hidehotkey = false,
-		showgrid = false,
+		showgrid = true,
 		autoassist = false,
 		states = { 
 			enabled = false, 
@@ -27,6 +27,12 @@ local abdefaults = {
 		},
 	}, Bartender4.ButtonBar.defaults),
 	[1] = {
+		position = {
+			point = "BOTTOM",
+			relPoint = "BOTTOM",
+			x = 0,
+			y = 32,
+		},
 		states = {
 			enabled = true,
 			possess = true,
@@ -36,6 +42,50 @@ local abdefaults = {
 				WARRIOR = { battle = 7, def = 8, berserker = 9 },
 				ROGUE = { stealth = 7 }
 			},
+		},
+	},
+	[2] = {
+		position = {
+			point = "BOTTOM",
+			relPoint = "BOTTOM",
+			x = 0,
+			y = 68,
+		},
+	},
+	[3] = {
+		position = {
+			point = "BOTTOM",
+			relPoint = "BOTTOM",
+			x = 0,
+			y = 104,
+		},
+	},
+	[4] = {
+		position = {
+			point = "BOTTOM",
+			relPoint = "BOTTOM",
+			x = 0,
+			y = 140,
+		},
+	},
+	[5] = {
+		enabled = true,
+		rows = 12,
+		position = {
+			point = "BOTTOMRIGHT",
+			relPoint = "BOTTOMRIGHT",
+			x = 0,
+			y = 136,
+		},
+	},
+	[6] = {
+		enabled = true,
+		rows = 12,
+		position = {
+			point = "BOTTOMRIGHT",
+			relPoint = "BOTTOMRIGHT",
+			x = -44,
+			y = 136,
 		},
 	},
 	[7] = {

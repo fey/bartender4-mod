@@ -155,13 +155,21 @@ function PetButtonPrototype:HideButton()
 	end
 end
 
-function PetButtonPrototype:ShowGrid()
-	self.showgrid = self.showgrid + 1
+function PetButtonPrototype:ShowGrid(force)
+	if force then
+		self.showgrid = 1
+	else
+		self.showgrid = self.showgrid + 1
+	end
 	self.normalTexture:Show()
 end
 
-function PetButtonPrototype:HideGrid()
-	if self.showgrid > 0 then self.showgrid = self.showgrid - 1 end
+function PetButtonPrototype:HideGrid(force)
+	if force then
+		self.showgrid = 0
+	elseif self.showgrid > 0 then
+		self.showgrid = self.showgrid - 1
+	end
 	if self.showgrid == 0  and not (GetPetActionInfo(self.id)) and not self.parent.config.showgrid then
 		self.normalTexture:Hide()
 	end
