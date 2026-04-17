@@ -5,6 +5,11 @@ local ReputationBarMod = Bartender4:GetModule("ReputationBar")
 
 function ReputationBarMod:SetupOptions()
 	if not self.options then
+		-- NOTE: We build Reputation options from a module-local option tree instead
+		-- of inheriting Bar:GetOptionObject(). The inherited path caused severe UI
+		-- stutter and incomplete first render in the XP/Reputation config pages.
+		-- Keeping local get/set/disabled handlers preserves functionality and
+		-- avoids the AceConfig callback path that triggered those lag spikes.
 		self.optionobject = Bartender4:NewOptionObject({
 			general = {
 				type = "group",
@@ -132,8 +137,8 @@ function ReputationBarMod:SetupOptions()
 			type = "range",
 			order = 40,
 			name = L["Bar Width"],
-			desc = L["Set the width of the bar."],
-			min = 100,
+			desc = L["Set the width of the bar."] .. " (0 = Full Width)",
+			min = 0,
 			max = 800,
 			step = 10,
 			get = function() return self.db.profile.width end,
