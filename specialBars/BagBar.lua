@@ -17,10 +17,10 @@ local defaults = { profile = Bartender4:Merge({
 	keyring = false,
 	onebag = false,
 	position = {
-		point = "BOTTOMRIGHT",
-		relPoint = "BOTTOMRIGHT",
-		x = 0,
-		y = 52,
+		point = "BOTTOM",
+		relPoint = "BOTTOM",
+		x = 350,
+		y = 32,
 	},
 }, Bartender4.ButtonBar.defaults) }
 

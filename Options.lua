@@ -216,3 +216,215 @@ function Bartender4:NewOptionObject(otbl)
 	
 	return tbl
 end
+
+local statusBarShowOptions = {
+	alwaysshow = L["Always Show"],
+	alwayshide = L["Always Hide"],
+	combatshow = L["Show in Combat"],
+	combathide = L["Hide in Combat"],
+}
+
+local statusBarTextures = {
+	["Interface\\TARGETINGFRAME\\UI-StatusBar"] = "Standard",
+	["Interface\\RAIDFRAME\\Raid-Bar-Hp-Fill"] = "Raid",
+	["Interface\\CASTINGBAR\\UI-CastingBar-Standard"] = "Casting",
+	["Interface\\PAPERDOLLINFOFRAME\\UI-Character-Skills-Bar"] = "Skills",
+	["Interface\\TARGETINGFRAME\\UI-TargetingFrame-BarFill"] = "Targeting",
+}
+
+function Bartender4:CreateStatusBarOptionObject(module, enabledDesc, showTextDesc)
+	-- NOTE: XP/Reputation options intentionally do not inherit Bar:GetOptionObject().
+	-- The inherited callback path caused severe UI stutter and incomplete first
+	-- render for these pages. Keep module-local get/set/disabled handlers.
+	local optionobject = Bartender4:NewOptionObject({
+		general = {
+			type = "group",
+			cmdInline = true,
+			name = L["General Settings"],
+			order = 1,
+			args = {},
+		},
+		layout = {
+			type = "group",
+			cmdInline = true,
+			name = L["Bar Style & Layout"],
+			order = 2,
+			args = {},
+		},
+		text = {
+			type = "group",
+			cmdInline = true,
+			name = L["Show Text"],
+			order = 3,
+			args = {},
+		},
+	})
+
+	local enabled = {
+		type = "toggle",
+		order = 1,
+		name = L["Enabled"],
+		desc = enabledDesc,
+		get = function() return module.db.profile.enabled end,
+		set = "ToggleModule",
+		handler = module,
+	}
+	optionobject:AddElement("general", "enabled", enabled)
+
+	optionobject:AddElement("general", "show", {
+		order = 5,
+		type = "select",
+		name = L["Show/Hide"],
+		desc = L["Configure when to Show/Hide the bar."],
+		values = statusBarShowOptions,
+		get = function() return module.db.profile.show end,
+		set = function(info, value)
+			module.db.profile.show = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "alpha", {
+		order = 20,
+		name = L["Alpha"],
+		desc = L["Configure the alpha of the bar."],
+		type = "range",
+		min = .1,
+		max = 1,
+		bigStep = 0.1,
+		get = function() return module.db.profile.alpha end,
+		set = function(info, value)
+			module.db.profile.alpha = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "scale", {
+		order = 30,
+		name = L["Scale"],
+		desc = L["Configure the scale of the bar."],
+		type = "range",
+		min = .1,
+		max = 2,
+		step = 0.05,
+		get = function() return module.db.profile.scale end,
+		set = function(info, value)
+			module.db.profile.scale = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "width", {
+		type = "range",
+		order = 40,
+		name = L["Bar Width"],
+		desc = L["Set the width of the bar."] .. " (0 = Full Width)",
+		min = 0,
+		max = 800,
+		step = 10,
+		get = function() return module.db.profile.width end,
+		set = function(info, value)
+			module.db.profile.width = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "height", {
+		type = "range",
+		order = 50,
+		name = L["Bar Height"],
+		desc = L["Set the height of the bar."],
+		min = 5,
+		max = 50,
+		step = 1,
+		get = function() return module.db.profile.height end,
+		set = function(info, value)
+			module.db.profile.height = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "texture", {
+		type = "select",
+		order = 60,
+		name = L["Bar Texture"],
+		desc = L["Select the texture for the bar."],
+		values = statusBarTextures,
+		get = function() return module.db.profile.texture end,
+		set = function(info, value)
+			module.db.profile.texture = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "fadeout", {
+		order = 100,
+		name = L["Fade Out"],
+		desc = L["Enable the FadeOut mode"],
+		type = "toggle",
+		width = "full",
+		get = function() return module.db.profile.fadeout end,
+		set = function(info, value)
+			module.db.profile.fadeout = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "fadeoutalpha", {
+		order = 101,
+		name = L["Fade Out Alpha"],
+		desc = L["Enable the FadeOut mode"],
+		type = "range",
+		min = 0,
+		max = 1,
+		step = 0.05,
+		disabled = function() return not module.db.profile.fadeout end,
+		get = function() return module.db.profile.fadeoutalpha end,
+		set = function(info, value)
+			module.db.profile.fadeoutalpha = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("layout", "fadeoutdelay", {
+		order = 102,
+		name = L["Fade Out Delay"],
+		desc = L["Enable the FadeOut mode"],
+		type = "range",
+		min = 0,
+		max = 1,
+		step = 0.01,
+		disabled = function() return not module.db.profile.fadeout end,
+		get = function() return module.db.profile.fadeoutdelay end,
+		set = function(info, value)
+			module.db.profile.fadeoutdelay = value
+			module:ApplyConfig()
+		end,
+	})
+
+	optionobject:AddElement("text", "showtext", {
+		type = "toggle",
+		order = 81,
+		name = L["Show Text"],
+		desc = showTextDesc,
+		get = function() return module.db.profile.showtext end,
+		set = function(info, value)
+			module.db.profile.showtext = value
+			module:ApplyConfig()
+		end,
+	})
+
+	local disabledoptions = {
+		general = {
+			type = "group",
+			name = L["General Settings"],
+			cmdInline = true,
+			order = 1,
+			args = {
+				enabled = enabled,
+			},
+		},
+	}
+
+	return optionobject, disabledoptions
+end

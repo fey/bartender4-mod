@@ -17,10 +17,10 @@ local defaults = { profile = Bartender4:Merge({
 	vertical = false,
 	scale = 0.75,
 	position = {
-		point = "BOTTOMRIGHT",
-		relPoint = "BOTTOMRIGHT",
-		x = -10,
-		y = 96,
+		point = "BOTTOM",
+		relPoint = "BOTTOM",
+		x = 350,
+		y = 76,
 	},
 }, Bartender4.Bar.defaults) }
 
