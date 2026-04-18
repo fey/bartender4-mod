@@ -22,6 +22,7 @@ local defaults = {
 	show = "alwaysshow",
 	snapping = true,
 	snapDistance = 12,
+	centerSnapDistance = 24,
 	snapPadding = 0,
 	clampToScreen = true,
 }
@@ -316,6 +317,16 @@ function Bar:SetSnapDistance(distance)
 	end
 end
 
+function Bar:GetCenterSnapDistance()
+	return self.config.centerSnapDistance
+end
+
+function Bar:SetCenterSnapDistance(distance)
+	if distance ~= nil then
+		self.config.centerSnapDistance = distance
+	end
+end
+
 function Bar:GetSnapPadding()
 	return self.config.snapPadding
 end
@@ -342,42 +353,77 @@ end
 function Bar:ApplyEdgeSnap()
 	if not self:GetSnapping() then return end
 	local snapDistance = self:GetSnapDistance() or 0
-	if snapDistance <= 0 then return end
+	local centerSnapDistance = self:GetCenterSnapDistance() or snapDistance
+	if snapDistance <= 0 and centerSnapDistance <= 0 then return end
 
 	local left, right, top, bottom = self:GetLeft(), self:GetRight(), self:GetTop(), self:GetBottom()
 	if not left then return end
+	local centerX = (left + right) * 0.5
+	local centerY = (top + bottom) * 0.5
 
 	local snapPadding = self:GetSnapPadding() or 0
 	local bestDeltaX, bestDeltaY
+	local bestTypeX, bestTypeY
+
+	local function shouldUseCandidate(delta, bestDelta, bestType, candidateType)
+		if not bestDelta then return true end
+		local absDelta = math_abs(delta)
+		local absBestDelta = math_abs(bestDelta)
+		if absDelta < absBestDelta then return true end
+		if absDelta > absBestDelta then return false end
+		if bestType == "center" and candidateType == "edge" then
+			return true
+		end
+		return false
+	end
 
 	for _, bar in pairs(barregistry) do
 		if bar ~= self and not bar.disabled and bar:IsShown() then
 			local oLeft, oRight, oTop, oBottom = bar:GetLeft(), bar:GetRight(), bar:GetTop(), bar:GetBottom()
 			if oLeft then
+				local oCenterX = (oLeft + oRight) * 0.5
+				local oCenterY = (oTop + oBottom) * 0.5
+
 				local overlapY = math_min(top, oTop) - math_max(bottom, oBottom)
 				if overlapY > 0 then
 					local deltaX = (oRight + snapPadding) - left
-					if math_abs(deltaX) <= snapDistance and (not bestDeltaX or math_abs(deltaX) < math_abs(bestDeltaX)) then
+					if math_abs(deltaX) <= snapDistance and shouldUseCandidate(deltaX, bestDeltaX, bestTypeX, "edge") then
 						bestDeltaX = deltaX
+						bestTypeX = "edge"
 					end
 
 					deltaX = (oLeft - snapPadding) - right
-					if math_abs(deltaX) <= snapDistance and (not bestDeltaX or math_abs(deltaX) < math_abs(bestDeltaX)) then
+					if math_abs(deltaX) <= snapDistance and shouldUseCandidate(deltaX, bestDeltaX, bestTypeX, "edge") then
 						bestDeltaX = deltaX
+						bestTypeX = "edge"
 					end
+				end
+
+				local deltaCenterX = oCenterX - centerX
+				if math_abs(deltaCenterX) <= centerSnapDistance and shouldUseCandidate(deltaCenterX, bestDeltaX, bestTypeX, "center") then
+					bestDeltaX = deltaCenterX
+					bestTypeX = "center"
 				end
 
 				local overlapX = math_min(right, oRight) - math_max(left, oLeft)
 				if overlapX > 0 then
 					local deltaY = (oTop + snapPadding) - bottom
-					if math_abs(deltaY) <= snapDistance and (not bestDeltaY or math_abs(deltaY) < math_abs(bestDeltaY)) then
+					if math_abs(deltaY) <= snapDistance and shouldUseCandidate(deltaY, bestDeltaY, bestTypeY, "edge") then
 						bestDeltaY = deltaY
+						bestTypeY = "edge"
 					end
 
 					deltaY = (oBottom - snapPadding) - top
-					if math_abs(deltaY) <= snapDistance and (not bestDeltaY or math_abs(deltaY) < math_abs(bestDeltaY)) then
+					if math_abs(deltaY) <= snapDistance and shouldUseCandidate(deltaY, bestDeltaY, bestTypeY, "edge") then
 						bestDeltaY = deltaY
+						bestTypeY = "edge"
 					end
+				end
+
+				local deltaCenterY = oCenterY - centerY
+				if math_abs(deltaCenterY) <= centerSnapDistance and shouldUseCandidate(deltaCenterY, bestDeltaY, bestTypeY, "center") then
+					bestDeltaY = deltaCenterY
+					bestTypeY = "center"
 				end
 			end
 		end
