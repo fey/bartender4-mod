@@ -32,5 +32,7 @@
 - Test lock/unlock, bar movement, state switching, and keybinding reassignment (module handles combat lockdown checks).
 
 ## Commit Messages
-- Write commit messages in clear, human-readable language.
-- The message should be understandable enough to be reused directly as changelog text.
+- Use Conventional Commits format (`type(scope): subject`) for all new commits.
+- Recommended types: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`.
+- Write messages in clear, human-readable language.
+- Keep the subject understandable enough to be reused directly as changelog text.
