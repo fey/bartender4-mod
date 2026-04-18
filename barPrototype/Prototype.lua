@@ -19,6 +19,10 @@ local defaults = {
 	fadeoutalpha = 0.1,
 	fadeoutdelay = 0.2,
 	show = "alwaysshow",
+	snapping = true,
+	snapDistance = 12,
+	snapPadding = 0,
+	clampToScreen = true,
 }
 
 local barOnEnter, barOnLeave, barOnDragStart, barOnDragStop, barOnClick, barOnUpdateFunc
@@ -141,6 +145,7 @@ function Bar:ApplyConfig(config)
 	self:SetShow()
 	self:Lock()
 	self:LoadPosition()
+	self:SetClampToScreen()
 	self:SetConfigScale()
 	self:SetConfigAlpha()
 	self:SetFadeOut()
@@ -286,6 +291,49 @@ end
 function Bar:SetFadeOutDelay(delay)
 	if delay ~= nil then
 		self.config.fadeoutdelay = delay
+	end
+end
+
+function Bar:GetSnapping()
+	return self.config.snapping
+end
+
+function Bar:SetSnapping(state)
+	if state ~= nil then
+		self.config.snapping = state
+	end
+end
+
+function Bar:GetSnapDistance()
+	return self.config.snapDistance
+end
+
+function Bar:SetSnapDistance(distance)
+	if distance ~= nil then
+		self.config.snapDistance = distance
+	end
+end
+
+function Bar:GetSnapPadding()
+	return self.config.snapPadding
+end
+
+function Bar:SetSnapPadding(padding)
+	if padding ~= nil then
+		self.config.snapPadding = padding
+	end
+end
+
+function Bar:GetClampToScreen()
+	return self.config.clampToScreen
+end
+
+function Bar:SetClampToScreen(state)
+	if state ~= nil then
+		self.config.clampToScreen = state
+	end
+	if self.SetClampedToScreen then
+		self:SetClampedToScreen(self.config.clampToScreen and true or false)
 	end
 end
 
