@@ -75,6 +75,6 @@ Implement practical bar positioning improvements in small, testable features:
 - [x] F4 Axis Alignment
 - [x] F5 Snap Priority Rules
 - [x] F6 Alignment UI
-- [ ] F7 Persistence + Scale
-- [ ] F8 Localization
+- [x] F7 Persistence + Scale
+- [x] F8 Localization
 - [ ] F9 In-Game Validation

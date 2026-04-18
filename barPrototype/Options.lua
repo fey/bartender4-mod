@@ -139,7 +139,8 @@ function Bar:GetOptionObject()
 				snapping = {
 					order = 1,
 					type = "toggle",
-					name = "Enable Snapping",
+					name = L["Enable Snapping"],
+					desc = L["Enable snapping while dragging."],
 					get = optGetter,
 					set = optSetter,
 					width = "full",
@@ -147,7 +148,8 @@ function Bar:GetOptionObject()
 				snapdistance = {
 					order = 10,
 					type = "range",
-					name = "Snap Distance",
+					name = L["Snap Distance"],
+					desc = L["Distance in pixels used for edge snapping."],
 					min = 0, max = 40, step = 1,
 					get = optGetter,
 					set = optSetter,
@@ -159,7 +161,8 @@ function Bar:GetOptionObject()
 				centersnapdistance = {
 					order = 20,
 					type = "range",
-					name = "Center Snap Distance",
+					name = L["Center Snap Distance"],
+					desc = L["Distance in pixels used for center alignment snapping."],
 					min = 0, max = 60, step = 1,
 					get = optGetter,
 					set = optSetter,
@@ -171,7 +174,8 @@ function Bar:GetOptionObject()
 				snappadding = {
 					order = 30,
 					type = "range",
-					name = "Snap Padding",
+					name = L["Snap Padding"],
+					desc = L["Additional gap between bars when edge snapping."],
 					min = -20, max = 40, step = 1,
 					get = optGetter,
 					set = optSetter,
@@ -183,7 +187,8 @@ function Bar:GetOptionObject()
 				clamptoscreen = {
 					order = 40,
 					type = "toggle",
-					name = "Clamp to Screen",
+					name = L["Clamp to Screen"],
+					desc = L["Keep bar inside screen bounds while moving."],
 					get = optGetter,
 					set = optSetter,
 					width = "full",

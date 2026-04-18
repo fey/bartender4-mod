@@ -192,6 +192,7 @@ function Bar:LoadPosition()
 	local point, relPoint = pos.point, pos.relPoint
 	x, y = x/s, y/s
 	self:ClearSetPoint(point, UIParent, relPoint, x, y)
+	self:ClampIntoView()
 end
 
 function Bar:SavePosition()
@@ -254,6 +255,7 @@ function Bar:SetConfigScale(scale)
 	end
 	self:SetScale(self.config.scale)
 	self:LoadPosition()
+	self:ClampIntoView()
 end
 
 function Bar:GetFadeOut()
@@ -348,6 +350,43 @@ function Bar:SetClampToScreen(state)
 	if self.SetClampedToScreen then
 		self:SetClampedToScreen(self.config.clampToScreen and true or false)
 	end
+	if self.config.clampToScreen then
+		self:ClampIntoView()
+	end
+end
+
+function Bar:ClampIntoView()
+	if not self:GetClampToScreen() then return end
+
+	local left, right, top, bottom = self:GetLeft(), self:GetRight(), self:GetTop(), self:GetBottom()
+	if not left then return end
+
+	local pLeft, pRight, pTop, pBottom = UIParent:GetLeft(), UIParent:GetRight(), UIParent:GetTop(), UIParent:GetBottom()
+	if not pLeft then return end
+
+	local deltaX, deltaY = 0, 0
+	if left < pLeft then
+		deltaX = pLeft - left
+	elseif right > pRight then
+		deltaX = pRight - right
+	end
+
+	if bottom < pBottom then
+		deltaY = pBottom - bottom
+	elseif top > pTop then
+		deltaY = pTop - top
+	end
+
+	if deltaX == 0 and deltaY == 0 then return end
+
+	local point, parent, relPoint, x, y = self:GetPoint()
+	if not point then return end
+
+	parent = parent or UIParent
+	local scale = parent.GetEffectiveScale and parent:GetEffectiveScale() or 1
+	x = x + (deltaX / scale)
+	y = y + (deltaY / scale)
+	self:ClearSetPoint(point, parent, relPoint, x, y)
 end
 
 function Bar:ApplyEdgeSnap()
