@@ -71,7 +71,7 @@ Implement practical bar positioning improvements in small, testable features:
 ## Current Status
 - [x] F1 Positioning Config Model
 - [x] F2 Clamp To Screen
-- [ ] F3 Snap To Other Bars (Edges)
+- [x] F3 Snap To Other Bars (Edges)
 - [ ] F4 Axis Alignment
 - [ ] F5 Snap Priority Rules
 - [ ] F6 Alignment UI

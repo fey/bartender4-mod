@@ -7,6 +7,7 @@ local Bar = CreateFrame("Button")
 local Bar_MT = {__index = Bar}
 
 local table_concat, table_insert = table.concat, table.insert
+local math_abs, math_max, math_min = math.abs, math.max, math.min
 
 --[[===================================================================================
 	Universal Bar Contructor
@@ -46,6 +47,7 @@ do
 		local parent = self:GetParent()
 		if parent.isMoving then
 			parent:StopMovingOrSizing()
+			parent:ApplyEdgeSnap()
 			parent:SavePosition()
 		end
 	end
@@ -335,6 +337,62 @@ function Bar:SetClampToScreen(state)
 	if self.SetClampedToScreen then
 		self:SetClampedToScreen(self.config.clampToScreen and true or false)
 	end
+end
+
+function Bar:ApplyEdgeSnap()
+	if not self:GetSnapping() then return end
+	local snapDistance = self:GetSnapDistance() or 0
+	if snapDistance <= 0 then return end
+
+	local left, right, top, bottom = self:GetLeft(), self:GetRight(), self:GetTop(), self:GetBottom()
+	if not left then return end
+
+	local snapPadding = self:GetSnapPadding() or 0
+	local bestDeltaX, bestDeltaY
+
+	for _, bar in pairs(barregistry) do
+		if bar ~= self and not bar.disabled and bar:IsShown() then
+			local oLeft, oRight, oTop, oBottom = bar:GetLeft(), bar:GetRight(), bar:GetTop(), bar:GetBottom()
+			if oLeft then
+				local overlapY = math_min(top, oTop) - math_max(bottom, oBottom)
+				if overlapY > 0 then
+					local deltaX = (oRight + snapPadding) - left
+					if math_abs(deltaX) <= snapDistance and (not bestDeltaX or math_abs(deltaX) < math_abs(bestDeltaX)) then
+						bestDeltaX = deltaX
+					end
+
+					deltaX = (oLeft - snapPadding) - right
+					if math_abs(deltaX) <= snapDistance and (not bestDeltaX or math_abs(deltaX) < math_abs(bestDeltaX)) then
+						bestDeltaX = deltaX
+					end
+				end
+
+				local overlapX = math_min(right, oRight) - math_max(left, oLeft)
+				if overlapX > 0 then
+					local deltaY = (oTop + snapPadding) - bottom
+					if math_abs(deltaY) <= snapDistance and (not bestDeltaY or math_abs(deltaY) < math_abs(bestDeltaY)) then
+						bestDeltaY = deltaY
+					end
+
+					deltaY = (oBottom - snapPadding) - top
+					if math_abs(deltaY) <= snapDistance and (not bestDeltaY or math_abs(deltaY) < math_abs(bestDeltaY)) then
+						bestDeltaY = deltaY
+					end
+				end
+			end
+		end
+	end
+
+	if not bestDeltaX and not bestDeltaY then return end
+
+	local point, parent, relPoint, x, y = self:GetPoint()
+	if not point then return end
+
+	parent = parent or UIParent
+	local scale = parent.GetEffectiveScale and parent:GetEffectiveScale() or 1
+	x = x + (bestDeltaX and bestDeltaX / scale or 0)
+	y = y + (bestDeltaY and bestDeltaY / scale or 0)
+	self:ClearSetPoint(point, parent, relPoint, x, y)
 end
 
 function Bar:ControlFadeOut()
