@@ -151,6 +151,7 @@ end
 function Bartender4:SetupOptions()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("Bartender4", getOptions, "bttest")
 	AceConfigDialog:SetDefaultSize("Bartender4", 680,525)
+	self.blizOptions = AceConfigDialog:AddToBlizOptions("Bartender4", "Bartender4")
 	local optFunc = function() 
 		if InCombatLockdown() then return end
 		AceConfigDialog:Open("Bartender4") 

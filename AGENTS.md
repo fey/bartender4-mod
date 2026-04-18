@@ -30,3 +30,7 @@
 ## Verification
 - Manual verification path: copy/update addon in AddOns folder, reload UI, open config via `/bt4` (or `/bt`, `/bar`).
 - Test lock/unlock, bar movement, state switching, and keybinding reassignment (module handles combat lockdown checks).
+
+## Commit Messages
+- Write commit messages in clear, human-readable language.
+- The message should be understandable enough to be reused directly as changelog text.
