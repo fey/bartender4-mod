@@ -39,6 +39,13 @@
 - Verify no random long-distance snap when bars are far apart.
 - Verify layout after `/reload`.
 
+## Keybinding Mode (`/kb`)
+- Run `/kb` to enter keybinding mode for Bartender buttons.
+- Hover or click the action button you want to bind, then press the desired key.
+- Press `ESC` while targeting a button to clear its binding.
+- Right-click a button to clear its current binding.
+- Run `/kb` again (or close the mode UI) to finish binding.
+
 ## FAQ
 
 ### Как сделать набор баров вплотную, без прорези между кнопками?
@@ -69,6 +76,12 @@ Important for stacked button bars (one above another):
 ### Бар “потерялся” после смены масштаба
 - Enable `Clamp to Screen`, then move bar once and release.
 - Optionally run `/reload` after final placement.
+
+### Как быстро переназначить клавиши для кнопок?
+- Используй `/kb` для входа в режим назначения биндов.
+- Наведи/кликни нужную кнопку и нажми новую клавишу.
+- `ESC` или ПКМ по кнопке очищает назначение.
+- Повтори `/kb`, чтобы выйти из режима.
 
 ## Practical Profiles
 
