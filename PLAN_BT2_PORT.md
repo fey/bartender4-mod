@@ -51,6 +51,20 @@
 - Интегрировать в текущую механику `Bar:Unlock()`/drag callbacks без ломки secure/lock логики.
 - Обновить локализацию ключей для новых опций.
 
+### Расширения поверх BT2-базы (P1 UX+)
+- `Center Snap Distance` для более "липкого" центрирования по X/Y.
+- Приоритеты snap-кандидатов (детерминированный выбор, edge при равенстве).
+- Стабилизация center snap (ограничение по близости на второй оси, чтобы не цепляться к далеким барам).
+- `Clamp to Screen` с доводкой позиции после load/scale (bar не теряется после `/reload` и смены масштаба).
+- Отдельные инструкции и QA-чеклист в `INSTRUCTION.md`.
+- FAQ по "стыку без щели" для stacked button bars (`Snap Padding = -8` как практическая компенсация frame insets).
+
+### Кандидаты на следующий этап (P2 UX)
+- Auto inset compensation для button bars (убрать необходимость ручного `Snap Padding = -8`).
+- Визуальные guide-линии при drag (показ active edge/center snap).
+- Временное отключение snap модификатором (например, удерживать `Alt` при drag).
+- Snap к экранным направляющим (`UIParent` center/edges), не только к другим барам.
+
 ### Этап 2 (P2): Friendly Target Page
 - Расширить state config в `actionBar/States.lua` и `actionBar/StatesOptions.lua`.
 - Добавить опцию выбора страницы (`0 = off`, `1..10 = page`, `-1 = hide`, если применимо по текущей модели).
