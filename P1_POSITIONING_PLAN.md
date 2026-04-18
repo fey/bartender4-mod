@@ -73,8 +73,8 @@ Implement practical bar positioning improvements in small, testable features:
 - [x] F2 Clamp To Screen
 - [x] F3 Snap To Other Bars (Edges)
 - [x] F4 Axis Alignment
-- [ ] F5 Snap Priority Rules
-- [ ] F6 Alignment UI
+- [x] F5 Snap Priority Rules
+- [x] F6 Alignment UI
 - [ ] F7 Persistence + Scale
 - [ ] F8 Localization
 - [ ] F9 In-Game Validation

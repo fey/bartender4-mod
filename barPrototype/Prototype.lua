@@ -399,8 +399,15 @@ function Bar:ApplyEdgeSnap()
 					end
 				end
 
+				local gapY = 0
+				if top < oBottom then
+					gapY = oBottom - top
+				elseif bottom > oTop then
+					gapY = bottom - oTop
+				end
+
 				local deltaCenterX = oCenterX - centerX
-				if math_abs(deltaCenterX) <= centerSnapDistance and shouldUseCandidate(deltaCenterX, bestDeltaX, bestTypeX, "center") then
+				if gapY <= centerSnapDistance and math_abs(deltaCenterX) <= centerSnapDistance and shouldUseCandidate(deltaCenterX, bestDeltaX, bestTypeX, "center") then
 					bestDeltaX = deltaCenterX
 					bestTypeX = "center"
 				end
@@ -420,8 +427,15 @@ function Bar:ApplyEdgeSnap()
 					end
 				end
 
+				local gapX = 0
+				if right < oLeft then
+					gapX = oLeft - right
+				elseif left > oRight then
+					gapX = left - oRight
+				end
+
 				local deltaCenterY = oCenterY - centerY
-				if math_abs(deltaCenterY) <= centerSnapDistance and shouldUseCandidate(deltaCenterY, bestDeltaY, bestTypeY, "center") then
+				if gapX <= centerSnapDistance and math_abs(deltaCenterY) <= centerSnapDistance and shouldUseCandidate(deltaCenterY, bestDeltaY, bestTypeY, "center") then
 					bestDeltaY = deltaCenterY
 					bestTypeY = "center"
 				end

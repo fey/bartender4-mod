@@ -20,6 +20,11 @@ do
 		fadeout = "FadeOut",
 		fadeoutalpha = "FadeOutAlpha",
 		fadeoutdelay = "FadeOutDelay",
+		snapping = "Snapping",
+		snapdistance = "SnapDistance",
+		centersnapdistance = "CenterSnapDistance",
+		snappadding = "SnapPadding",
+		clamptoscreen = "ClampToScreen",
 	}
 	
 	-- retrieves a valid bar object from the barregistry table
@@ -131,10 +136,57 @@ function Bar:GetOptionObject()
 			name = L["Alignment"],
 			order = 10,
 			args = {
-				info = {
+				snapping = {
 					order = 1,
-					type = "description",
-					name = L["The Alignment menu is still on the TODO.\n\nAs a quick preview of whats planned:\n\n\t- Absolute and relative Bar Positioning\n\t- Bars \"snapping\" together and building clusters"],
+					type = "toggle",
+					name = "Enable Snapping",
+					get = optGetter,
+					set = optSetter,
+					width = "full",
+				},
+				snapdistance = {
+					order = 10,
+					type = "range",
+					name = "Snap Distance",
+					min = 0, max = 40, step = 1,
+					get = optGetter,
+					set = optSetter,
+					disabled = function(info)
+						local bar = barregistry[info[2]]
+						return not (bar and bar:GetSnapping())
+					end,
+				},
+				centersnapdistance = {
+					order = 20,
+					type = "range",
+					name = "Center Snap Distance",
+					min = 0, max = 60, step = 1,
+					get = optGetter,
+					set = optSetter,
+					disabled = function(info)
+						local bar = barregistry[info[2]]
+						return not (bar and bar:GetSnapping())
+					end,
+				},
+				snappadding = {
+					order = 30,
+					type = "range",
+					name = "Snap Padding",
+					min = -20, max = 40, step = 1,
+					get = optGetter,
+					set = optSetter,
+					disabled = function(info)
+						local bar = barregistry[info[2]]
+						return not (bar and bar:GetSnapping())
+					end,
+				},
+				clamptoscreen = {
+					order = 40,
+					type = "toggle",
+					name = "Clamp to Screen",
+					get = optGetter,
+					set = optSetter,
+					width = "full",
 				},
 			},
 		}
