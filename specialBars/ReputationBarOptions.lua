@@ -29,7 +29,7 @@ function ReputationBarMod:SetupOptions()
 			type = "group",
 			name = L["Reputation Bar"],
 			desc = L["Configure the Reputation Bar"],
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 		Bartender4:RegisterBarOptions("ReputationBar", self.options)
 	end

@@ -18,25 +18,17 @@ function MicroMenuMod:SetupOptions()
 			set = "ToggleModule",
 			handler = self,
 		}
-		self.optionobject:AddElement("general", "enabled", enabled)
+		self.optionobject.table.enabled = enabled
 		
 		self.disabledoptions = {
-			general = {
-				type = "group",
-				name = L["General Settings"],
-				cmdInline = true,
-				order = 1,
-				args = {
-					enabled = enabled,
-				}
-			}
+			enabled = enabled,
 		}
 		self.options = {
 			order = 30,
 			type = "group",
 			name = L["Micro Menu"],
 			desc = L["Configure the Micro Menu"],
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 		Bartender4:RegisterBarOptions("MicroMenu", self.options)
 	end

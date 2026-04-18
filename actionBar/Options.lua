@@ -63,14 +63,6 @@ function module:GetOptionsObject()
 		local obj = ButtonBar.GetOptionObject(self)
 		
 		local cat_general = {
-			enabled ={
-				order = 4,
-				name = L["Enabled"],
-				desc = L["Enable/Disable the bar."],
-				type = "toggle",
-				set = optSetter,
-				get = optGetter,
-			},
 			grid = {
 				order = 60,
 				type = "toggle",
@@ -141,10 +133,25 @@ function module:CreateBarOption(id, options)
 			type = "group",
 			name = (L["Bar %s"]):format(id),
 			desc = (L["Configure Bar %s"]):format(id),
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 	end
-	self.options[id].args = options
+
+	local args = {}
+	for k,v in pairs(options) do
+		args[k] = v
+	end
+	if not args.enabled then
+		args.enabled = {
+			order = 1,
+			name = L["Enabled"],
+			desc = L["Enable/Disable the bar."],
+			type = "toggle",
+			set = optSetter,
+			get = optGetter,
+		}
+	end
+	self.options[id].args = args
 	
 	-- register options in the BT GUI
 	Bartender4:RegisterBarOptions(id, self.options[id])

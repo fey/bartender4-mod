@@ -30,7 +30,7 @@ function XPBarMod:SetupOptions()
 			type = "group",
 			name = L["XP Bar"],
 			desc = L["Configure the XP Bar"],
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 		Bartender4:RegisterBarOptions("XPBar", self.options)
 	end

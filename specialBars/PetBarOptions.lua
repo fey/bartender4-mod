@@ -21,18 +21,10 @@ function PetBarMod:SetupOptions()
 			set = "ToggleModule",
 			handler = self,
 		}
-		self.optionobject:AddElement("general", "enabled", enabled)
+		self.optionobject.table.enabled = enabled
 		
 		self.disabledoptions = {
-			general = {
-				type = "group",
-				name = L["General Settings"],
-				cmdInline = true,
-				order = 1,
-				args = {
-					enabled = enabled,
-				}
-			}
+			enabled = enabled,
 		}
 		
 		self.options = {
@@ -40,7 +32,7 @@ function PetBarMod:SetupOptions()
 			type = "group",
 			name = L["Pet Bar"],
 			desc = L["Configure the Pet Bar"],
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 		Bartender4:RegisterBarOptions("PetBar", self.options)
 	end

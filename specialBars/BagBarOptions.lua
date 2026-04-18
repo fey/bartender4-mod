@@ -19,7 +19,7 @@ function BagBarMod:SetupOptions()
 			set = "ToggleModule",
 			handler = self,
 		}
-		self.optionobject:AddElement("general", "enabled", enabled)
+		self.optionobject.table.enabled = enabled
 		
 		local onebag = {
 			type = "toggle",
@@ -42,22 +42,14 @@ function BagBarMod:SetupOptions()
 		self.optionobject:AddElement("general", "keyring", keyring)
 		
 		self.disabledoptions = {
-			general = {
-				type = "group",
-				name = L["General Settings"],
-				cmdInline = true,
-				order = 1,
-				args = {
-					enabled = enabled,
-				}
-			}
+			enabled = enabled,
 		}
 		self.options = {
 			order = 30,
 			type = "group",
 			name = L["Bag Bar"],
 			desc = L["Configure the Bag Bar"],
-			childGroups = "tab",
+			childGroups = "tree",
 		}
 		Bartender4:RegisterBarOptions("BagBar", self.options)
 	end

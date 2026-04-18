@@ -269,7 +269,7 @@ function Bartender4:CreateStatusBarOptionObject(module, enabledDesc, showTextDes
 		set = "ToggleModule",
 		handler = module,
 	}
-	optionobject:AddElement("general", "enabled", enabled)
+	optionobject.table.enabled = enabled
 
 	optionobject:AddElement("general", "show", {
 		order = 5,
@@ -415,15 +415,7 @@ function Bartender4:CreateStatusBarOptionObject(module, enabledDesc, showTextDes
 	})
 
 	local disabledoptions = {
-		general = {
-			type = "group",
-			name = L["General Settings"],
-			cmdInline = true,
-			order = 1,
-			args = {
-				enabled = enabled,
-			},
-		},
+		enabled = enabled,
 	}
 
 	return optionobject, disabledoptions

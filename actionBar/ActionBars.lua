@@ -149,20 +149,13 @@ function BT4ActionBars:SetupOptions()
 		
 		-- template for disabled bars
 		self.disabledoptions = {
-			general = {
-				type = "group",
-				name = L["General Settings"],
-				cmdInline = true,
+			enabled = {
+				type = "toggle",
 				order = 1,
-				args = {
-					enabled = {
-						type = "toggle",
-						name = L["Enabled"],
-						desc = L["Enable/Disable the bar."],
-						set = function(info, v) if v then BT4ActionBars:EnableBar(info[2]) end end,
-						get = function() return false end,
-					}
-				}
+				name = L["Enabled"],
+				desc = L["Enable/Disable the bar."],
+				set = function(info, v) if v then BT4ActionBars:EnableBar(info[2]) end end,
+				get = function() return false end,
 			}
 		}
 		

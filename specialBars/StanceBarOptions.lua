@@ -20,18 +20,10 @@ function StanceBarMod:SetupOptions()
 			set = "ToggleModule",
 			handler = self,
 		}
-		self.optionobject:AddElement("general", "enabled", enabled)
+		self.optionobject.table.enabled = enabled
 		
 		self.disabledoptions = {
-			general = {
-				type = "group",
-				name = L["General Settings"],
-				cmdInline = true,
-				order = 1,
-				args = {
-					enabled = enabled,
-				}
-			}
+			enabled = enabled,
 		}
 		
 		self.options = {
@@ -39,7 +31,7 @@ function StanceBarMod:SetupOptions()
 			type = "group",
 			name = L["Stance Bar"],
 			desc = L["Configure  the Stance Bar"],
-			childGroups = "tab",
+			childGroups = "tree",
 			disabled = function(info) return GetNumShapeshiftForms() == 0 end,
 		}
 		Bartender4:RegisterBarOptions("StanceBar", self.options)
